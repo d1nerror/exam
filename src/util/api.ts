@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Category } from "../interfaces/category";
+import type { Category, Question } from "../interfaces";
 
 const instance = axios.create({
   baseURL: "https://quizapi.io/api/",
@@ -9,6 +9,14 @@ const instance = axios.create({
 
 export async function getCategories(): Promise<Category[]> {
   const response = await instance.get("v1/categories");
+  
+  return response.data;
+  
+}
+
+export async function getQuestions(): Promise<Question[]> {
+  const response = await instance.get("v1/questions");
 
   return response.data;
+
 }

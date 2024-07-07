@@ -1,11 +1,11 @@
-import React from 'react';
-import Select from './components/Select';
-import './App.css';
+import Categories from './components/Categories';
+
 
 const App = ()=> {
     return (
-        <>
-        <Select /> 
+      <>
+        <Categories /> 
+
         </>
         )
 }
