@@ -1,30 +1,22 @@
-import { getQuestions } from '../util/api';
-import { Question } from '../interfaces';
-import { useState, useEffect } from 'react';
+import axios from "axios";
+import type { Category, Question } from "../interfaces";
 
-export default function FetchQuestions () {
-const [questions, setQuestions] = useState<Question[]>([])
+const instance = axios.create({
+  baseURL: "https://quizapi.io/api/",
+  headers: { "X-Api-Key": import.meta.env.VITE_API_KEY },
+  timeout: 1000,
+});
 
-useEffect(()=> {
-    const FetchQuestions = async ()=> {
-        const data = await getQuestions();
-        
-        setQuestions(data);
-    }; 
+export async function getCategories(): Promise<Category[]> {
+  const response = await instance.get("v1/categories");
+  return response.data;
+}
 
-    FetchQuestions();
-},[])
-
-console.log("Question:",questions)
-return (
-    <div>
-            <h2>Categories</h2>
-                {questions.map((question) => (
-                    <option key={question.id}>{question.question}</option>
-                ))}
-  
-        </div>
-
-);
-
-};
+export async function getQuestions(
+  selectedCategory: string,
+): Promise<Question[]> {
+  const response = await instance.get("v1/questions", {
+    params: { category: selectedCategory },
+  });
+  return response.data;
+}

@@ -14,9 +14,9 @@ export async function getCategories(): Promise<Category[]> {
   
 }
 
-export async function getQuestions(): Promise<Question[]> {
-  const response = await instance.get("v1/questions");
-
+export async function getQuestions(selectedCategory: string): Promise<Question[]> {
+  const response = await instance.get("v1/questions", {
+    params: { category: selectedCategory, limit: 10 },
+  });
   return response.data;
-
 }
